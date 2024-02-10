@@ -4,5 +4,5 @@
 
 * [Caesar Cipher](./caesar_cipher.rb)
 * [Sub Strings](./substring.rb)
-* Stock Picker
+* [Stock Picker](./stock_picker.rb)
 * Bubble Sort
