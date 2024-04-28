@@ -1,24 +1,11 @@
 # frozen_string_literal: true
 
 def merge(left, right)
-  i = j = k = 0
+  return left if right.empty?
+  return right if left.empty?
 
-  size = left.length + right.length
-  comb = Array.new(size)
-  while k < size
-    right_overflow = j >= right.length
-    left_overflow = i >= left.length
-
-    if left_overflow || (!right_overflow && (left[i] > right[j]))
-      comb[k] = right[j]
-      j += 1
-    elsif right_overflow || (!left_overflow && (left[i] <= right[j]))
-      comb[k] = left[i]
-      i += 1
-    end
-    k += 1
-  end
-  comb
+  smallest_element = left[0] > right[0] ? right.shift : left.shift
+  [smallest_element].concat(merge(left, right))
 end
 
 def merge_sort(array)
@@ -30,6 +17,7 @@ def merge_sort(array)
   merge(left, right)
 end
 
+p merge_sort([7, 6, 2, 5, 1, 0, 3, 4])
 p merge_sort([1, 8, 9, 9, 2, 0, 3, 4])
 p merge_sort([3, 2, 1, 13, 8, 5, 0, 1])
 p merge_sort([105, 79, 100, 110])
