@@ -15,4 +15,4 @@
 ## Recursion Projects
 
 * [Fibonacci Sequence](./recursion/fibs.rb)
-* [Merge Sorte](./recursion/merge_sort.rb)
+* [Merge Sort](./recursion/merge_sort.rb)
