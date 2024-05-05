@@ -16,3 +16,10 @@
 
 * [Fibonacci Sequence](./recursion/fibs.rb)
 * [Merge Sort](./recursion/merge_sort.rb)
+
+## Data Structures and Algorithms
+
+* [Linked Lists](./dsa/linked_list/linked_list.rb)
+* [HashMap](./)
+* [Binary Search Trees](./)
+* [Knight Travails](./)
