@@ -4,17 +4,16 @@ require './node'
 
 # Represents a singly linked list data structure.
 class LinkedList
-  attr_reader :size
+  attr_reader :size, :head, :tail
 
   def initialize
     @size = 0
-    @head = nil
-    @tail = nil
+    @head = @tail = nil
   end
 
   def append(value)
     node = create_node(value)
-    if empty?
+    if head.nil?
       @head = node
     else
       @tail.next_node = node
@@ -23,121 +22,35 @@ class LinkedList
   end
 
   def prepend(value)
-    node = create_node(value)
-    if empty?
-      @tail = node
-    else
-      node.next_node = @head
-    end
+    node = create_node(value, @head)
+    @tail = node if head.nil?
     @head = node
   end
 
-  def head
-    @head.value
-  end
+  def at(index)
+    index = index.negative? ? size + index : index
+    return nil if index.negative? || head.nil?
 
-  def tail
-    @tail.value
-  end
-
-  def shift(remove: true)
-    return nil if empty?
-
-    node = @head
-    if remove
-      @head = node.next_node
-      node.next_node = nil
-      decrement
-      @tail = @head if size <= 1
-    end
-    node.value
-  end
-
-  def swap(pointer, remove: true)
-    return nil if empty?
-
-    node = pointer.next_node
-    if remove
-      @tail = pointer if @tail == node
-      pointer.next_node = node.next_node
-      node.next_node = nil
-      decrement
-    end
-    node.value
-  end
-
-  def at(index, remove: false)
-    index = normalize_index(index)
-
-    return nil if empty? || index.abs >= size
-
-    return shift(remove: remove) if index.zero?
-
-    counter = 0
-    pointer = @head
-    until pointer.next_node.nil?
-      return swap(pointer, remove: remove) if counter + 1 == index
-
-      counter += 1
-      pointer = pointer.next_node
-    end
+    pointer = head
+    index.times { pointer = pointer.next_node }
+    pointer
   end
 
   def remove_at(index)
-    at(index, remove: true)
-  end
+    current_node = at(index)
+    previous_node = (size + index).positive? ? at(index - 1) : nil
+    return nil if current_node.nil?
 
-  def find(value)
-    index = 0
-
-    pointer = @head
-    until pointer.nil?
-      return index if pointer.value == value
-
-      index += 1
-      pointer = pointer.next_node
-    end
-  end
-
-  def contains?(value)
-    !find(value).nil?
-  end
-
-  def insert_in_middle(value, index)
-    counter = 0
-    pointer = @head
-    until pointer.nil?
-      if counter + 1 == index
-        insert_after(pointer, value)
-        return
-      end
-      counter += 1
-      pointer = pointer.next_node
-    end
-  end
-
-  def insert_after(node, value)
-    new_node = create_node(value)
-    new_node.next_node = node.next_node
-    node.next_node = new_node
-  end
-
-  def insert_at(value, index)
-    index = normalize_index(index)
-
-    return nil if index.abs > size
-
-    if index.zero?
-      prepend(value)
-    elsif index == size
-      append(value)
+    if @head == current_node
+      @head = @head.next_node
     else
-      insert_in_middle(value, index)
-    end
-  end
+      previous_node.next_node = current_node.next_node
 
-  def empty?
-    @head.nil?
+    end
+    @size -= 1
+    @tail = previous_node if @tail == current_node
+    current_node.next_node = nil
+    current_node
   end
 
   def pop
@@ -158,20 +71,8 @@ class LinkedList
 
   private
 
-  def create_node(value)
-    increment
-    Node.new(value)
-  end
-
-  def increment
+  def create_node(value, next_node = nil)
     @size += 1
-  end
-
-  def decrement
-    @size -= 1
-  end
-
-  def normalize_index(index)
-    index.negative? ? size - index.abs : index
+    Node.new(value, next_node)
   end
 end
