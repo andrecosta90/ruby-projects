@@ -30,6 +30,24 @@ puts array
 # puts array.remove_at(-1)
 puts array.remove_at(0)
 puts array
+array.insert_at(1990, 0)
+array.insert_at(1948, array.size)
+array.insert_at(1956, 3)
+puts array.at(3)
+puts array
+puts array.find(1990)
+puts array.find(1956)
+puts array.find(1948)
+puts array.find(2002)
+puts
+puts array.contains?(1990)
+puts array.contains?(1956)
+puts array.contains?(1948)
+puts array.contains?(2002)
+
+# p array.at(2)
+# p array.at(3)
+# p array.at(4)
 # puts array.remove_at(-3)
 # puts array.remove_at(0)
 # puts array.remove_at(0)
