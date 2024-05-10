@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 
 require './entry'
+require_relative '../linked_list/linked_list'
+require_relative '../linked_list/node'
 
 class HashMap
   attr_reader :length
 
   def initialize
     @buckets = []
-    @capacity = 16
+    @capacity = 3
     @length = 0
     @load_factor = 0.75
+
+    @capacity.times { @buckets.push(LinkedList.new) }
   end
 
   def hash(key)
@@ -19,46 +23,63 @@ class HashMap
 
     key.each_char { |char| hash_code = prime_number * hash_code + char.ord }
 
+    # puts "key=#{key} hash=#{hash_code % @capacity}"
+
     hash_code % @capacity
   end
 
   def set(key, value)
     new_entry = Entry.new(key, value)
-    puts new_entry
-    # puts(length * 1.0 / @capacity)
     grow if (length * 1.0 / @capacity) >= @load_factor
 
-    @buckets[hash(key)] = new_entry
-    @length += 1
+    hash_code = hash(key)
+    @length += 1 if @buckets[hash_code].empty?
+
+    # puts "length = #{length}"
+
+    @buckets[hash_code].remove(new_entry) if @buckets[hash_code].contains?(new_entry)
+
+    @buckets[hash_code].append(new_entry)
   end
 
   def get(key)
-    @buckets[hash(key)]
+    item = @buckets[hash(key)].get(Entry.new(key))
+    item&.value
   end
 
   def has?(key)
-    @buckets[hash(key)].nil? ? false : true
+    get(key).nil? ? false : true
   end
 
   def remove(key)
     return if @length.zero?
 
-    entry = @buckets[hash(key)]
-    @buckets[hash(key)] = nil
-    @length -= 1
-    entry
+    hash_code = hash(key)
+    item = @buckets[hash_code].remove(Entry.new(key))
+
+    @length -= 1 if @buckets[hash_code].empty?
+    item&.value
   end
 
-  def keys
-    @buckets.reject(&:nil?).map(&:key)
-  end
-
-  def values
-    @buckets.reject(&:nil?).map(&:value)
+  def clear
+    # todo
+    1
   end
 
   def entries
-    keys.zip(values)
+    array = []
+    @buckets.reject(&:empty?).each do |list|
+      list.each { |element| array << [element.key, element.value] }
+    end
+    array
+  end
+
+  def keys
+    entries.map { |row| row[0] }
+  end
+
+  def values
+    entries.map { |row| row[1] }
   end
 
   def to_s

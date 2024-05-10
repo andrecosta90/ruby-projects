@@ -44,6 +44,8 @@ puts array.contains?(1990)
 puts array.contains?(1956)
 puts array.contains?(1948)
 puts array.contains?(2002)
+puts
+puts array.to_s
 
 # p array.at(2)
 # p array.at(3)

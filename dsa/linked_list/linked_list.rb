@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './node'
+require_relative './node'
 
 # Represents a singly linked list data structure.
 class LinkedList
@@ -61,6 +61,16 @@ class LinkedList
     previous_node.next_node = new_node
   end
 
+  def get(value)
+    pointer = head
+    @size.times do
+      return pointer.value if pointer.value == value
+
+      pointer = pointer.next_node
+    end
+    nil
+  end
+
   def find(value)
     pointer = head
     (0..(size - 1)).each do |index|
@@ -71,6 +81,11 @@ class LinkedList
     -1
   end
 
+  def remove(value)
+    index = find(value)
+    remove_at(index) unless index.negative?
+  end
+
   def contains?(value)
     find(value) >= 0
   end
@@ -79,16 +94,24 @@ class LinkedList
     remove_at(-1)
   end
 
+  def each
+    pointer = @head
+    until pointer.nil?
+      yield(pointer.value)
+      pointer = pointer.next_node
+    end
+  end
+
   def to_s
     format = []
 
-    pointer = @head
-    until pointer.nil?
-      format << "( #{pointer.value} )"
-      pointer = pointer.next_node
-    end
+    each { |element| format << "( #{element} )" }
     format << 'nil'
     format.join(' -> ')
+  end
+
+  def empty?
+    size.zero?
   end
 
   private
