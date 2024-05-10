@@ -4,9 +4,13 @@ require_relative './entry'
 require_relative '../linked_list/linked_list'
 require_relative '../linked_list/node'
 
+# Represents a hash map data structure.
 class HashMap
   attr_reader :length
 
+  # Initializes a new hash map with a specified capacity.
+  #
+  # @param capacity [Integer] The initial capacity of the hash map. Defaults to 16 if not provided.
   def initialize(capacity = 16)
     @capacity = capacity
 
@@ -24,8 +28,6 @@ class HashMap
 
     key.each_char { |char| hash_code = prime_number * hash_code + char.ord }
 
-    # puts "key=#{key} hash=#{hash_code % @capacity}"
-
     hash_code % @capacity
   end
 
@@ -35,8 +37,6 @@ class HashMap
 
     hash_code = hash(key)
     @length += 1 if @buckets[hash_code].empty?
-
-    # puts "length = #{length}"
 
     @buckets[hash_code].remove(new_entry) if @buckets[hash_code].contains?(new_entry)
 
@@ -91,6 +91,7 @@ class HashMap
 
   private
 
+  # Doubles the capacity of the hash map and rehashes all key-value pairs.
   def grow
     buckets_copy = @buckets.dup
 

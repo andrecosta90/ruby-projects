@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Represents an entry in a key-value pair.
 class Entry
   attr_reader :key, :value
 
