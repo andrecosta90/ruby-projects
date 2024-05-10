@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
-require './entry'
+require_relative './entry'
 require_relative '../linked_list/linked_list'
 require_relative '../linked_list/node'
 
 class HashMap
   attr_reader :length
 
-  def initialize
+  def initialize(capacity = 16)
+    @capacity = capacity
+
     @buckets = []
-    @capacity = 3
     @length = 0
     @load_factor = 0.75
 
@@ -62,8 +63,8 @@ class HashMap
   end
 
   def clear
-    # todo
-    1
+    @length = 0
+    @buckets.reject(&:empty?).each(&:clear)
   end
 
   def entries
@@ -91,10 +92,12 @@ class HashMap
   private
 
   def grow
-    # To grow our buckets,
-    # 1. we create a new buckets list that is DOUBLE the size of
-    #  the old buckets list,
-    # 2. then we copy all nodes over to the new buckets.
-    puts 'TODO #growth'
+    buckets_copy = @buckets.dup
+
+    initialize(@capacity * 2)
+    buckets_copy.each do |list|
+      list.each { |element| set(element.key, element.value) }
+      list.clear
+    end
   end
 end

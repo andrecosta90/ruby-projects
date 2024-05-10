@@ -29,7 +29,9 @@ class LinkedList
 
   def at(index)
     index = normalize_index(index)
+
     return nil if index > size || head.nil?
+    return tail if index == @size - 1
 
     pointer = head
     index.times { pointer = pointer.next_node }
@@ -53,6 +55,7 @@ class LinkedList
   def insert_at(value, index)
     index = normalize_index(index)
 
+    raise IndexError, "list index out of range. index=#{index} size=#{size}" if index > size
     return prepend(value) if index.zero?
     return append(value) if index == size
 
@@ -100,6 +103,10 @@ class LinkedList
       yield(pointer.value)
       pointer = pointer.next_node
     end
+  end
+
+  def clear
+    size.times { pop }
   end
 
   def to_s
