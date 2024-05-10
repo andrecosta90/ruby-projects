@@ -20,6 +20,6 @@
 ## Data Structures and Algorithms
 
 * [Linked Lists](./dsa/linked_list/linked_list.rb)
-* [HashMap](./)
+* [HashMap](./dsa/hashmap/hashmap.rb)
 * [Binary Search Trees](./)
 * [Knight Travails](./)
