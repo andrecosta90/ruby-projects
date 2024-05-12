@@ -21,5 +21,5 @@
 
 * [Linked Lists](./dsa/linked_list/linked_list.rb)
 * [HashMap](./dsa/hashmap/hashmap.rb)
-* [Binary Search Trees](./)
+* [Binary Search Trees](./dsa/bst/bst.rb)
 * [Knight Travails](./)
