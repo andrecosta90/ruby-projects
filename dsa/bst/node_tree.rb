@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Node
+class NodeTree
   include Comparable
 
   attr_accessor :data, :left, :right, :n_children
