@@ -123,7 +123,7 @@ class Tree
     # TODO
     array = []
     inorder { |el| array << el.data }
-    array
+    @root = build_tree(array.uniq.sort)
   end
 
   private
@@ -161,6 +161,7 @@ class Tree
   end
 
   def build_tree(array)
+    return nil if array.empty?
     return NodeTree.new(array[0]) if array.length == 1
 
     mid = array.length / 2
