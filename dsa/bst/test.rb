@@ -44,8 +44,11 @@ p tree.inorder
 puts "\n\n*****\n\n"
 tree.inorder { |el| puts el }
 # tree.level_order { |el| puts el }
-
+puts "\n\n*****\n\n"
 # p tree
 # p tree
 # puts tree.max
 # puts tree.min
+p tree.height
+p tree.height(tree.find(NodeTree.new(25)))
+p tree.depth(tree.find(NodeTree.new(6)))

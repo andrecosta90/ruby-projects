@@ -34,11 +34,6 @@ class Tree
     node
   end
 
-  def min(node = @root)
-    node = node.left until node.left.nil?
-    node
-  end
-
   def delete(data, node = @root)
     return node if node.nil?
 
@@ -63,8 +58,6 @@ class Tree
     return find(data, node.left) if data < node
 
     find(data, node.right) if data > node
-
-    # nil
   end
 
   def level_order(node = @root)
@@ -109,7 +102,26 @@ class Tree
     array unless array.empty?
   end
 
+  def height(node = @root)
+    return 0 if node.nil? || node.leaf?
+
+    h_left = height(node.left)
+    h_right = height(node.right)
+    1 + (h_left > h_right ? h_left : h_right)
+  end
+
+  def depth(target, node = @root)
+    return 0 if target == node || target.nil? || node.leaf?
+
+    1 + (target < node ? depth(target, node.left) : depth(target, node.right))
+  end
+
   private
+
+  def min(node = @root)
+    node = node.left until node.left.nil?
+    node
+  end
 
   def delete_node(node)
     target_node = min(node.right)
