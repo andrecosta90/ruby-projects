@@ -52,3 +52,14 @@ puts "\n\n*****\n\n"
 p tree.height
 p tree.height(tree.find(NodeTree.new(25)))
 p tree.depth(tree.find(NodeTree.new(6)))
+puts "\n\n*****\n\n"
+
+tree = Tree.new
+tree.insert(NodeTree.new(10))
+tree.insert(NodeTree.new(5))
+tree.insert(NodeTree.new(3))
+tree.insert(NodeTree.new(1))
+tree.insert(NodeTree.new(11))
+tree.insert(NodeTree.new(14))
+tree.pretty_print
+puts tree.balanced?
