@@ -4,8 +4,7 @@ require_relative '../linked_list/linked_list'
 
 class Tree
   def initialize(array = [])
-    # @root = build_tree(array.uniq.sort)
-    @root = nil
+    @root = build_tree(array.uniq.sort)
   end
 
   def pretty_print(node = @root, prefix = '', is_left: true)
@@ -120,6 +119,13 @@ class Tree
     balanced_height(node) != -1
   end
 
+  def rebalance
+    # TODO
+    array = []
+    inorder { |el| array << el.data }
+    array
+  end
+
   private
 
   def balanced_height(node = @root)
@@ -155,6 +161,12 @@ class Tree
   end
 
   def build_tree(array)
-    nil
+    return NodeTree.new(array[0]) if array.length == 1
+
+    mid = array.length / 2
+    node = NodeTree.new(array[mid])
+    node.left = build_tree(array[0..mid - 1])
+    node.right = build_tree(array[mid + 1..array.length]) if mid + 1 < array.length
+    node
   end
 end
