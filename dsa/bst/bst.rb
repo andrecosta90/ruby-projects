@@ -2,6 +2,7 @@
 
 require_relative '../linked_list/linked_list'
 
+# Tree represents a binary search tree data structure.
 class Tree
   def initialize(array = [])
     @root = build_tree(array.uniq.sort)

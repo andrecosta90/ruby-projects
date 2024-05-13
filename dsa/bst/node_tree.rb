@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# NodeTree represents a node in a binary tree structure.
+# Each node contains data and references to its left and right children.
+# It also provides methods to determine if it's a leaf node and
+# a custom comparison operator for sorting purposes.
 class NodeTree
   include Comparable
 
