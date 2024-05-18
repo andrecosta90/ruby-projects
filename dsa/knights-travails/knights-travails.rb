@@ -80,8 +80,8 @@ end
 # neighbors([0, 0]) { |e| p e }
 # knight_moves([0, 0], [1, 2])
 # p NODES
-source = [3, 4]
-target = [7,7]
+source = [0, 1]
+target = [7, 6]
 
 dijkstra(source, target)
 

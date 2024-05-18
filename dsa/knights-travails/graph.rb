@@ -5,10 +5,11 @@ require 'algorithms'
 
 # The Graph class implements Dijkstra's algorithm to find the shortest path in a graph.
 class Graph
-  attr_reader :struct
+  attr_reader :nodes, :edges
 
-  def initialize(struct)
-    @struct = struct
+  def initialize(nodes, edges)
+    @nodes = nodes
+    @edges = edges
     @distance = {}
     @predecessor = {}
     @visited = {}
@@ -30,9 +31,8 @@ class Graph
       node_u = pqueue.pop
       break if node_u.nil?
 
-      struct.neighbors(node_u) do |node_v|
-        relax(node_u, node_v, pqueue)
-      end
+      edges[node_u].each { |node_v| relax(node_u, node_v, pqueue) }
+
     end
     @predecessor.dup
   end
@@ -43,7 +43,7 @@ class Graph
   #
   # @param source [Object] The source node from which to initialize distances.
   def initialize_single_source(source)
-    struct.nodes.each do |node|
+    nodes.each do |node|
       @distance[node] = Float::INFINITY
       @predecessor[node] = nil
       @visited[node] = false
