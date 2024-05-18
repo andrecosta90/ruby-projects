@@ -19,7 +19,7 @@
 
 ## Data Structures and Algorithms
 
-* [Linked Lists](./dsa/linked-list/linked_list.rb)
+* [Linked Lists](./dsa/linked-list/linked-list.rb)
 * [HashMap](./dsa/hashmap/hashmap.rb)
 * [Binary Search Trees](./dsa/bst/bst.rb)
 * [Knight Travails](./dsa/knights-travails/)
