@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-# require 'priority_queue'
+# gem install algorithms
+require 'algorithms'
 
 INDEXES = (0..7).to_a.freeze
 NODES = INDEXES.product(INDEXES).freeze
@@ -26,12 +27,6 @@ def neighbors(source)
   end
 end
 
-def valid?(predecessor, successor)
-  neighbors(predecessor) do |neigh|
-    return true if neigh == successor
-  end
-  false
-end
 
 def knight_moves(source, target)
   neighbors(source) do |neigh|
@@ -51,10 +46,12 @@ def initialize_single_source(source)
   DIST[source] = 0
 end
 
-def relax(node_u, node_v)
+def relax(node_u, node_v, pqueue)
   new_dist = DIST[node_u] + 1
 
   return unless DIST[node_v] > new_dist
+
+  pqueue.push(node_v, new_dist)
 
   DIST[node_v] = new_dist
   PRED[node_v] = node_u
@@ -64,13 +61,18 @@ end
 
 def dijkstra(source, target)
   initialize_single_source(source)
-  visited = []
+  # visited = []
+  pqueue = Containers::PriorityQueue.new
+  pqueue.push(source, 0)
 
-  while visited.length < NODES.length
-    node_u = DIST.reject { |node| visited.include?(node) }.min_by(&:last).first
-    visited.push(node_u)
+  until pqueue.empty?
+    # node_u = DIST.reject { |node| visited.include?(node) }.min_by(&:last).first
+    # visited.push(node_u)
+    node_u = pqueue.pop
+    break if node_u.nil?
+
     neighbors(node_u) do |node_v|
-      relax(node_u, node_v)
+      relax(node_u, node_v, pqueue)
     end
   end
 end
@@ -78,8 +80,8 @@ end
 # neighbors([0, 0]) { |e| p e }
 # knight_moves([0, 0], [1, 2])
 # p NODES
-source = [0, 0]
-target = [2,2]
+source = [3, 4]
+target = [7,7]
 
 dijkstra(source, target)
 

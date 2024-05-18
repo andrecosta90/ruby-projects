@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../linked_list/linked_list'
+require_relative '../linked-list/linked-list'
 
 # Tree represents a binary search tree data structure.
 class Tree
